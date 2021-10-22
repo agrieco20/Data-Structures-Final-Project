@@ -8,8 +8,7 @@ package SABank;
 
 import java.util.*;
 /**
- *
- * @author mwoh3
+ * @author Anthony Grieco, Matthew O'Hara, Zachary Phillips
  */
 public class Main {
 
@@ -36,11 +35,11 @@ public class Main {
         accountList[4]= Amanda;
 
         do{
-            System.out.print("Welcome to the Saint Anselm bank!\n"+"Please select one of the options below:\n");
+            System.out.print("Welcome to the Saint Anselm Bank!\n"+"Please select one of the options below:\n");
             System.out.println("1. Display All Accounts\n"+"2. Make a Deposit\n"+"3. Make a Withdrawal\n"+"4. Add Interest to All Accounts\n"+"5. Total Number of Accounts\n"+"6. Exit");
             int answer = scan.nextInt();
             if(answer==1){
-                System.out.println("First Name" + "\t|\t" + "Last Name" + "\t|\t" + "Gender" + "\t|\t" + "Birthday" + "\t|\t" + "Social Security Number" + "\t|\t" + "Account Number" + "\t|\t" + "Account Type"+ "\t|\t" + "Person Type" + "\t|\t" + "Balance");
+                //System.out.println("First Name," + " " + "Last Name," + " " + "Gender" + " " + "Birthday" + " " + "Social Security Number" + " " + "Account Number" + " " + "Account Type"+ " " + "Person Type" + " " + "Balance");
                 for(Account elem : accountList){
                     System.out.println(elem.displayAllAccountInfo());
                 }
@@ -54,10 +53,10 @@ public class Main {
                         System.out.println("Which account would you like to deposit to? (Please enter first name of account)");
                         String firstNameResponse = scan.nextLine();
                         if(elem.getFirstName().equalsIgnoreCase(firstNameResponse)){
-                            System.out.println("How much would you like to deposit to that account?");
+                            System.out.print("How much would you like to deposit to that account?\n$");
                             double deposit = scan.nextDouble();
                             elem.depositToBalance(deposit);
-                            System.out.println("The amount $"+String.format("%.2f",deposit)+" has been added to the account\n Current balance: "+ elem.getBalance());
+                            System.out.println("The amount $"+String.format("%.2f",deposit)+" has been added to the account\n Current Balance: $"+ String.format("%.2f", elem.getBalance()));
                         }else{
                             count+=1;
                             if(count==accountList.length){
@@ -83,7 +82,7 @@ public class Main {
                         System.out.println("Which account would you like to withdraw from? (Please enter first name of account)");
                         String firstNameResponse = scan.nextLine();
                         if(elem.getFirstName().equalsIgnoreCase(firstNameResponse)){
-                            System.out.println("How much would you like to withdraw from that account?");
+                            System.out.print("How much would you like to withdraw from that account?\n$");
                             withdrawal = scan.nextDouble();
                             while(done==false){
 
@@ -92,7 +91,7 @@ public class Main {
                                     done=false;
                                 }else{
                                     elem.withdrawFromBalance(withdrawal);
-                                    System.out.println("The amount $"+String.format("%.2f",withdrawal)+" has been removed to the account\n Current balance: "+ String.format("%.2f",elem.getBalance()));
+                                    System.out.println("The amount $"+String.format("%.2f",withdrawal)+" has been removed to the account\n Current Balance: $"+ String.format("%.2f",elem.getBalance()));
                                     break;
                                 }
                                 System.out.println("How much would you like to withdraw from that account?");
@@ -127,7 +126,7 @@ public class Main {
                 for(Account elem : accountList){
                   double interestAddition = elem.getBalance()*interest;
                   elem.depositToBalance(interestAddition);
-                  System.out.println("Current balance for "+ elem.getFirstName()+" "+elem.getLastName()+" is: "+ String.format("%.2f",elem.getBalance()));
+                  System.out.println("Current balance for "+ elem.getFirstName()+" "+elem.getLastName()+" is: $"+ String.format("%.2f",elem.getBalance()));
                 }
             }
             if(answer==5) {

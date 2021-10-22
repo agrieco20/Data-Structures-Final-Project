@@ -153,8 +153,8 @@ public class Account {
     }
 
     public String displayAllAccountInfo(){
-        //"First Name" + "\t" + "Last Name" + "\t" + "Gender" + "\t" + "Birthday" + "\t" + "Social Security Number" + "\t" + "Account Number" + "\t" + "Account Type"+ "\t" + "Person Type" + "\t" + "Balance";
-        return firstName + "\t|\t" + lastName + "\t|\t" + sex + "\t|\t" + dob + "\t|\t" + getHiddenSSN() + "\t|\t" + accountNumber + "\t|\t" + accountType + "\t|\t" + person + "\t|\t" + String.format("%.2f",balance);
+        //"First Name" + " " + "Last Name" + " " + "Gender" + " " + "Birthday" + " " + "Social Security Number" + " " + "Account Number" + " " + "Account Type"+ " " + "Person Type" + " " + "Balance";
+        return firstName + " " + lastName + " " + sex + " " + dob + " " + getHiddenSSN() + " " + accountNumber + " " + accountType + " " + person + " $" + String.format("%.2f", balance);
     }
 
 }

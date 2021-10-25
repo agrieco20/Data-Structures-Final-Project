@@ -35,7 +35,7 @@ public class Main {
         accountList[4]= Amanda;
 
         do{
-            System.out.print("Welcome to the Saint Anselm Bank!\n"+"Please select one of the options below:\n");
+            System.out.println("Please select one of the options below:");
             System.out.println("1. Display All Accounts\n"+"2. Make a Deposit\n"+"3. Make a Withdrawal\n"+"4. Add Interest to All Accounts\n"+"5. Total Number of Accounts\n"+"6. Exit");
             int answer = scan.nextInt();
             if(answer==1){
@@ -119,8 +119,8 @@ public class Main {
                     }
                 }
                 count=0;
-
             }
+
             if(answer==4){
                 System.out.println("2% Interest Added to all Accounts: ");
                 for(Account elem : accountList){
@@ -129,7 +129,9 @@ public class Main {
                   System.out.println("Current balance for "+ elem.getFirstName()+" "+elem.getLastName()+" is: $"+ String.format("%.2f",elem.getBalance()));
                 }
             }
+
             if(answer==5) {
+                int counter = 0;
                 System.out.println("Would you like to:\n" + "1. Number of Savings Accounts:\n" + "2. Number of Checking Accounts:\n" + "3. Number of Student Accounts:\n" + "4. Number of Employee Accounts:");
                 int option = scan.nextInt();
                 if (option == 1) {
@@ -143,13 +145,15 @@ public class Main {
                 if (option == 2) {
                     for (Account elem : accountList) {
                         if (elem.getAccountType() == 'C') {
+                            counter++;
                             System.out.println(elem.getFirstName() + " " + elem.getLastName());
                         }
                     }
                 }
                 if (option == 3) {
-                    for (Account elem : accountList) {
+                    for (Account elem : accountList){
                         if (elem.getPersonType() == 1) {
+                            counter++;
                             System.out.println(elem.getFirstName() + " " + elem.getLastName());
                         }
                     }
@@ -169,6 +173,5 @@ public class Main {
         }while(quit!=true);
         System.out.println("Done!");
         System.exit(0);
-
     }
 }

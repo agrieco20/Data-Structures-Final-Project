@@ -138,6 +138,7 @@ public class Main {
                             System.out.println(elem.getFirstName() + " " + elem.getLastName());
                         }
                     }
+                    System.out.println("Number of Savings Accounts: "+counter);
                 }
                 if (option == 2) {
                     for (Account elem : accountList) {

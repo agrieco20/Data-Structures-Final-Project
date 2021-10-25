@@ -33,7 +33,7 @@ public class Main {
         accountList[2]= Ellie;
         accountList[3]= Barry;
         accountList[4]= Amanda;
-
+        System.out.println("Welcome to the Saint Anselm Bank!");
         do{
             System.out.println("Please select one of the options below:");
             System.out.println("1. Display All Accounts\n"+"2. Make a Deposit\n"+"3. Make a Withdrawal\n"+"4. Add Interest to All Accounts\n"+"5. Total Number of Accounts\n"+"6. Exit");
@@ -137,6 +137,7 @@ public class Main {
                 if (option == 1) {
                     for (Account elem : accountList) {
                         if (elem.getAccountType() == 'S') {
+                            counter++;
                             System.out.println(elem.getFirstName() + " " + elem.getLastName());
                         }
                     }
@@ -149,6 +150,7 @@ public class Main {
                             System.out.println(elem.getFirstName() + " " + elem.getLastName());
                         }
                     }
+                    System.out.println("Number of Checking Accounts: "+counter);
                 }
                 if (option == 3) {
                     for (Account elem : accountList){
@@ -157,16 +159,18 @@ public class Main {
                             System.out.println(elem.getFirstName() + " " + elem.getLastName());
                         }
                     }
+                    System.out.println("Number of Student Accounts: "+counter);
                 }
                 if (option == 4) {
                     for (Account elem : accountList) {
                         if (elem.getPersonType() == 2 || elem.getPersonType() == 3) {
+                            counter++;
                             System.out.println(elem.getFirstName() + " " + elem.getLastName());
                         }
                     }
+                    System.out.println("Number of Faculty Accounts: "+counter);
                 }
             }
-
             if(answer==6){
                 quit=true;
             }

@@ -51,7 +51,7 @@ public class Main {
         System.out.println("Welcome to the Saint Anselm Bank!");
         do {
             System.out.println("Please select one of the options below:");
-            System.out.println("1. Display All Accounts\n"+"2. Make a Deposit\n"+"3. Make a Withdrawal\n"+"4. Add Interest to All Accounts\n"+"5. Total Number of Accounts\n"+"6. Exit");
+            System.out.println("1. Display All Accounts\n" + "2. Total Number of Accounts\n" + "3. Open a New Account with Initial Deposit\n" + "4. Open a New Account with no Deposit\n" + "5. Add Interest to All Accounts\n" + "6. Display Student Accounts with Balance less than $100\n" + "7. Display all Employee Accounts with a Balance over $5000\n" + "8. Linear Search for Account Holder\n" + "9. Display Savings Accounts based on a Bubble Sort by First Name\n" + "10. Exit\n");
             int answer = scan.nextInt();
             if (answer == 1) {
                 //System.out.println("First Name," + " " + "Last Name," + " " + "Gender" + " " + "Birthday" + " " + "Social Security Number" + " " + "Account Number" + " " + "Account Type"+ " " + "Person Type" + " " + "Balance");

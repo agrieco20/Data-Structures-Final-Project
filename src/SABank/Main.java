@@ -121,7 +121,7 @@ public class Main {
                     }
                     tempArray[currentIndexCounter + 1] = newAccount;
                     //accountList = null;
-                    accountList=tempArray; //Issue here
+                    accountList=tempArray; //Issue here and need to implement in choice 4 and top of file with default accounts
                 }
                 else { //If it is big enough, a new array does not need to be created (for size reasons), and the "newAccount" will be added to "accountList" as usual
                     accountList[currentIndexCounter] = newAccount;

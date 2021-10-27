@@ -308,7 +308,42 @@ public class Main {
             }
 
             if (answer == 9){
-                //accountList
+                int counter = 0;
+                int position = 0;
+
+                for (Account elem : accountList) {
+                    if (elem.getAccountType() == 'S') {
+                        counter++;
+                    }
+                }
+
+                Account[] savingAccountsArray= new Account[counter];
+
+                for (Account elem : accountList) {
+                    if(elem.getAccountType() == 'S') {
+                        savingAccountsArray[position] = elem;
+                        position++;
+                    }
+                }
+
+                for(int iteration = savingAccountsArray.length - 1; iteration >= 0; iteration--){
+                    for (int i = 0; i < savingAccountsArray.length - 1; i++) {
+                        if (savingAccountsArray[i].getFirstName().compareTo(savingAccountsArray[i + 1].getFirstName()) > 0) {
+                            Account tempAccount = savingAccountsArray[i + 1];
+                            savingAccountsArray[i + 1] = savingAccountsArray[i];
+                            savingAccountsArray[i] = tempAccount;
+                        }
+                    }
+                }
+
+                System.out.println("Savings Accounts:");
+
+                for (Account elem : savingAccountsArray){
+                    System.out.println(elem.displayAllAccountInfo());
+                }
+
+                System.out.println();
+
             }
 
             if(answer==10){

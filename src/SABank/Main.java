@@ -50,13 +50,15 @@ public class Main {
         accountList[4]= Amanda;
         System.out.println("Welcome to the Saint Anselm Bank!");
         do {
+            System.out.println();
             System.out.println("Please select one of the options below:");
             System.out.println("1. Display All Accounts\n" + "2. Total Number of Accounts\n" + "3. Open a New Account with Initial Deposit\n" + "4. Open a New Account with no Deposit\n" + "5. Add Interest to All Accounts\n" + "6. Display Student Accounts with Balance less than $100\n" + "7. Display all Employee Accounts with a Balance over $5000\n" + "8. Linear Search for Account Holder\n" + "9. Display Savings Accounts based on a Bubble Sort by First Name\n" + "10. Exit\n");
             int answer = scan.nextInt();
             if (answer == 1) {
                 //System.out.println("First Name," + " " + "Last Name," + " " + "Gender" + " " + "Birthday" + " " + "Social Security Number" + " " + "Account Number" + " " + "Account Type"+ " " + "Person Type" + " " + "Balance");
                 for (Account elem : accountList) {
-                    System.out.println(elem.displayAllAccountInfo());
+                    if(elem != null)
+                        System.out.println(elem.displayAllAccountInfo());
                 }
             }
 
@@ -66,7 +68,7 @@ public class Main {
                 int option = scan.nextInt();
                 if (option == 1) {
                     for (Account elem : accountList) {
-                        if (elem.getAccountType() == 'S') {
+                        if (elem != null && elem.getAccountType() == 'S') {
                             counter++;
                             System.out.println(elem.getFirstName() + " " + elem.getLastName());
                         }
@@ -75,7 +77,7 @@ public class Main {
                 }
                 if (option == 2) {
                     for (Account elem : accountList) {
-                        if (elem.getAccountType() == 'C') {
+                        if (elem != null && elem.getAccountType() == 'C') {
                             counter++;
                             System.out.println(elem.getFirstName() + " " + elem.getLastName());
                         }
@@ -93,7 +95,6 @@ public class Main {
                 scan.nextLine();
                 String firstName = scan.nextLine();
                 System.out.print("Last Name: ");
-                scan.nextLine();
                 String lastName = scan.nextLine();
                 System.out.print("Gender (M/F): ");
                 char gender = scan.next().charAt(0);
@@ -119,7 +120,7 @@ public class Main {
                     for (int i = 0; i < accountList.length; i++) { //Takes all old values from "accountList" array and adds them to the new "tempArray"
                         tempArray[i] = accountList[i];
                     }
-                    tempArray[currentIndexCounter + 1] = newAccount;
+                    tempArray[currentIndexCounter] = newAccount;
                     //accountList = null;
                     accountList=tempArray; //Issue here and need to implement in choice 4 and top of file with default accounts
                 }
@@ -133,8 +134,9 @@ public class Main {
                 System.out.println("Your account has been successfully created " + firstName + ".\nThank you for banking with Saint Anselm Bank!");
                 //Not Permanent
                 System.out.println("***The following should not be in the final version of the code***");
-                for (int i = 0; i < accountList.length; i++){
-                    System.out.println(accountList[i].getFirstName());
+                for (Account elem: accountList){
+                    if(elem != null)
+                        System.out.println(elem.getFirstName());
                 }
             }
 
@@ -159,15 +161,17 @@ public class Main {
             if (answer == 5) {
                 System.out.println("2% Interest Added to all Accounts: ");
                 for (Account elem : accountList) {
-                    double interestAddition = elem.getBalance() * interest;
-                    elem.depositToBalance(interestAddition);
-                    System.out.println("Current balance for " + elem.getFirstName() + " " + elem.getLastName() + " is: $" + String.format("%.2f", elem.getBalance()));
+                    if(elem != null) {
+                        double interestAddition = elem.getBalance() * interest;
+                        elem.depositToBalance(interestAddition);
+                        System.out.println("Current balance for " + elem.getFirstName() + " " + elem.getLastName() + " is: $" + String.format("%.2f", elem.getBalance()));
+                    }
                 }
             }
 
             if (answer == 6) {
                 for (Account elem : accountList) {
-                    if (elem.getPersonType() == 1) {
+                    if (elem != null && elem.getPersonType() == 1) {
                         if (elem.getBalance() < 100) {
                             System.out.println(elem.getFirstName() + " " + elem.getLastName());
                         }
@@ -177,7 +181,7 @@ public class Main {
 
             if (answer == 7) {
                 for (Account elem : accountList) {
-                    if (elem.getPersonType() == 2 || elem.getPersonType() == 3) {
+                    if (elem != null && (elem.getPersonType() == 2 || elem.getPersonType() == 3)) {
                         if (elem.getBalance() > 5000) {
                             System.out.println(elem.getFirstName() + " " + elem.getLastName());
                         }
@@ -190,7 +194,7 @@ public class Main {
                 scan.nextLine();
                 String lastNameResponse = scan.nextLine();
                 for (Account elem : accountList) {
-                    if (elem.getLastName().equalsIgnoreCase(lastNameResponse)) {
+                    if (elem != null && elem.getLastName().equalsIgnoreCase(lastNameResponse)) {
                         System.out.println("Please enter first name of account as well in order to ensure the right account is accessed: ");
                         String firstNameResponse = scan.nextLine();
                         if (elem.getFirstName().equalsIgnoreCase(firstNameResponse)) {
@@ -259,7 +263,7 @@ public class Main {
                 count = 0;
             }
 
-            if (answer == 3) {
+            /*if (answer == 3) {
                 System.out.println("Which account would you like to withdraw from? (Please enter last name of account)");
                 scan.nextLine();
                 String lastNameResponse = scan.nextLine();
@@ -305,14 +309,14 @@ public class Main {
                     }
                 }
                 count = 0;
-            }
+            }*/
 
             if (answer == 9){
                 int counter = 0;
                 int position = 0;
 
                 for (Account elem : accountList) {
-                    if (elem.getAccountType() == 'S') {
+                    if (elem != null && elem.getAccountType() == 'S') {
                         counter++;
                     }
                 }
@@ -320,7 +324,7 @@ public class Main {
                 Account[] savingAccountsArray= new Account[counter];
 
                 for (Account elem : accountList) {
-                    if(elem.getAccountType() == 'S') {
+                    if( elem != null && elem.getAccountType() == 'S') {
                         savingAccountsArray[position] = elem;
                         position++;
                     }

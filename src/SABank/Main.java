@@ -46,12 +46,47 @@ public class Main {
         accountList[0]= Timmy;
         accountList[1]= Mark;
         accountList[2]= Ellie;
-        accountList[3]= Barry;
-        accountList[4]= Amanda;
+        currentIndexCounter++;
+        accountList[3]= Hannah;
+        currentIndexCounter++;
+        accountList[4]= Kurt;
+        currentIndexCounter++;
+
+        if (currentIndexCounter == accountList.length){
+            Account[] tempAccountList = new Account[accountList.length * 2];
+            for (int i = 0; i<accountList.length; i++){
+                tempAccountList[i] = accountList[i];
+            }
+            accountList = tempAccountList;
+
+            accountList[5]= Mark;
+            currentIndexCounter++;
+            accountList[6]= Bill;
+            currentIndexCounter++;
+            accountList[7]= Carol;
+            currentIndexCounter++;
+            accountList[8]= Liam;
+            currentIndexCounter++;
+            accountList[9]= Ashley;
+            currentIndexCounter++;
+        }
+
+        if (currentIndexCounter == accountList.length){
+            Account[] tempAccountList = new Account[accountList.length * 2];
+            for (int i = 0; i<accountList.length; i++){
+                tempAccountList[i] = accountList[i];
+            }
+            accountList = tempAccountList;
+            accountList[10]= Barry;
+            accountList[11]= Fred;
+            accountList[12]= Jim;
+            accountList[13]= Gary;
+            accountList[14]= Linda;
+        }
+
         System.out.println("Welcome to the Saint Anselm Bank!");
         do {
-            System.out.println();
-            System.out.println("Please select one of the options below:");
+            System.out.println("\nPlease select one of the options below:");
             System.out.println("1. Display All Accounts\n" + "2. Total Number of Accounts\n" + "3. Open a New Account with Initial Deposit\n" + "4. Open a New Account with no Deposit\n" + "5. Add Interest to All Accounts\n" + "6. Display Student Accounts with Balance less than $100\n" + "7. Display all Employee Accounts with a Balance over $5000\n" + "8. Linear Search for Account Holder\n" + "9. Display Savings Accounts based on a Bubble Sort by First Name\n" + "10. Exit\n");
             int answer = scan.nextInt();
             if (answer == 1) {
@@ -93,23 +128,23 @@ public class Main {
                 System.out.println("Thank you for deciding to open a new account here at Saint Anselm Bank!\nWe are going to need some information from you to get started:");
                 System.out.print("First Name: ");
                 scan.nextLine();
-                String firstName = scan.nextLine();
+                firstName = scan.nextLine();
                 System.out.print("Last Name: ");
-                String lastName = scan.nextLine();
+                lastName = scan.nextLine();
                 System.out.print("Gender (M/F): ");
-                char gender = scan.next().charAt(0);
+                gender = scan.next().charAt(0);
                 System.out.print("Birthday (In the form MM/DD/YY): ");
                 scan.nextLine();
-                String birthday = scan.nextLine();
+                birthday = scan.nextLine();
                 System.out.print("Checking ('C') or Savings?('S'): ");
-                char accountType = scan.next().charAt(0);
+                accountType = scan.next().charAt(0);
                 System.out.print("Occupation (Student='1', Staff='2', Faculty='3'): ");
-                int personType = scan.nextInt();
+                personType = scan.nextInt();
                 System.out.print("Deposit: ");
-                double initialDeposit = scan.nextDouble();
-                //String newAccount = "test"+newUserAccountCounter;
-                Account newAccount = new Account(firstName, lastName, gender, birthday, accountType, personType, initialDeposit);
-                int currentIndexCounter = 0;
+                initialDeposit = scan.nextDouble();
+                Account newAccount = new Account (firstName, lastName, gender, birthday, accountType, personType, initialDeposit);
+
+                currentIndexCounter = 0;
                 for (int i = 0; i < accountList.length; i++) { //Checks to see if "accountList" is big enough to take more input
                     if (accountList[i] != null) {
                         currentIndexCounter++;
@@ -145,9 +180,9 @@ public class Main {
                 System.out.print("First Name: ");
                 String firstName = scan.nextLine();
                 System.out.print("Last Name: ");
-                String lastName = scan.nextLine();
+                lastName = scan.nextLine();
                 System.out.print("Gender (M/F): ");
-                char gender = scan.next().charAt(0);
+                gender = scan.next().charAt(0);
                 System.out.print("Birthday (In the form MM/DD/YY): ");
                 String birthday = scan.nextLine();
                 System.out.print("Checking ('C') or Savings?('S'): ");
@@ -180,6 +215,7 @@ public class Main {
             }
 
             if (answer == 7) {
+                System.out.println("The following employee accounts are eligible for a promotional credit card offer:");
                 for (Account elem : accountList) {
                     if (elem != null && (elem.getPersonType() == 2 || elem.getPersonType() == 3)) {
                         if (elem.getBalance() > 5000) {
@@ -231,7 +267,7 @@ public class Main {
                             if (selection == 5) {
                                 Account[] tempArray = new Account[accountList.length - 1];
                                 for (int i = 0, j = 0; i < accountList.length; i++) {
-                                    if (accountList[i].getLastName() != elem.getLastName() && accountList[i].getFirstName() != elem.getFirstName()) {
+                                    if (accountList[i] != null && accountList[i].getLastName() != elem.getLastName() && accountList[i].getFirstName() != elem.getFirstName()) {
                                         tempArray[j++] = accountList[i];
                                     }
                                 }
@@ -262,54 +298,6 @@ public class Main {
                 }
                 count = 0;
             }
-
-            /*if (answer == 3) {
-                System.out.println("Which account would you like to withdraw from? (Please enter last name of account)");
-                scan.nextLine();
-                String lastNameResponse = scan.nextLine();
-                for (Account elem : accountList) {
-                    if (elem.getLastName().equalsIgnoreCase(lastNameResponse)) {
-                        System.out.println("Which account would you like to withdraw from? (Please enter first name of account)");
-                        String firstNameResponse = scan.nextLine();
-                        if (elem.getFirstName().equalsIgnoreCase(firstNameResponse)) {
-                            System.out.print("How much would you like to withdraw from that account?\n$");
-                            withdrawal = scan.nextDouble();
-                            while (done == false) {
-
-                                if (withdrawal > elem.getBalance()) {
-                                    System.out.println("You do not have enough money make a withdrawal of that size.");
-                                    done = false;
-                                } else {
-                                    elem.withdrawFromBalance(withdrawal);
-                                    System.out.println("The amount $" + String.format("%.2f", withdrawal) + " has been removed to the account\n Current Balance: $" + String.format("%.2f", elem.getBalance()));
-                                    break;
-                                }
-                                System.out.println("How much would you like to withdraw from that account?");
-                                withdrawal = scan.nextDouble();
-                            }
-//                            System.out.println("How much would you like to withdraw from that account?");
-//                            double withdrawal = scan.nextDouble();
-//                            if(withdrawal>elem.getBalance()){
-//                                System.out.println("You do not have enough money make a withdrawal of that size");
-//                            }else{
-//                                elem.withdrawFromBalance(withdrawal);
-//                                System.out.println("The amount $"+String.format("%.2f",withdrawal)+" has been removed to the account\n Current balance: "+ elem.getBalance());
-                            //}
-                        } else {
-                            count += 1;
-                            if (count == accountList.length) {
-                                System.out.println("An account under that first name doesn't exist.");
-                            }
-                        }
-                    } else {
-                        count += 1;
-                        if (count == accountList.length) {
-                            System.out.println("An account under that last name doesn't exist.");
-                        }
-                    }
-                }
-                count = 0;
-            }*/
 
             if (answer == 9){
                 int counter = 0;
@@ -359,22 +347,3 @@ public class Main {
         System.exit(0);
     }
 }
-
-//                if (option == 3) {
-//                    for (Account elem : accountList){
-//                        if (elem.getPersonType() == 1) {
-//                            counter++;
-//                            System.out.println(elem.getFirstName() + " " + elem.getLastName());
-//                        }
-//                    }
-//                    System.out.println("Number of Student Accounts: "+counter);
-//                }
-//                if (option == 4) {
-//                    for (Account elem : accountList) {
-//                        if (elem.getPersonType() == 2 || elem.getPersonType() == 3) {
-//                            counter++;
-//                            System.out.println(elem.getFirstName() + " " + elem.getLastName());
-//                        }
-//                    }
-//                    System.out.println("Number of Faculty Accounts: "+counter);
-//}

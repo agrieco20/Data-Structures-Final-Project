@@ -15,7 +15,20 @@ public class Main {
         int count = 0;
         boolean done=false;
         double withdrawal;
-        //int newUserAccountCounter = 0; //Used as a new user input naming convention
+        int answer;
+        int counter;
+        int position;
+        int option;
+        int currentIndexCounter = 0;
+        String firstName;
+        String lastName;
+        char gender;
+        String birthday;
+        char accountType;
+        int personType;
+        double deposit;
+        double initialDeposit;
+
         //Student Accounts (3 Checking, 2 Savings)
         Account Amanda = new Account("Amanda","Turner",'F',"02/22/02",'C',1,1200);
         Account Timmy = new Account("Timmy","Brown",'M',"07/04/01",'C',1);
@@ -87,7 +100,7 @@ public class Main {
         do {
             System.out.println("\nPlease select one of the options below:");
             System.out.println("1. Display All Accounts\n" + "2. Total Number of Accounts\n" + "3. Open a New Account with Initial Deposit\n" + "4. Open a New Account with no Deposit\n" + "5. Add Interest to All Accounts\n" + "6. Display Student Accounts with Balance less than $100\n" + "7. Display all Employee Accounts with a Balance over $5000\n" + "8. Linear Search for Account Holder\n" + "9. Display Savings Accounts based on a Bubble Sort by First Name\n" + "10. Exit\n");
-            int answer = scan.nextInt();
+            answer = scan.nextInt();
             if (answer == 1) {
                 //System.out.println("First Name," + " " + "Last Name," + " " + "Gender" + " " + "Birthday" + " " + "Social Security Number" + " " + "Account Number" + " " + "Account Type"+ " " + "Person Type" + " " + "Balance");
                 for (Account elem : accountList) {
@@ -97,9 +110,9 @@ public class Main {
             }
 
             if (answer == 2) {
-                int counter = 0;
+                counter = 0;
                 System.out.println("Would you like to see:\n" + "1. Number of Savings Accounts:\n" + "2. Number of Checking Accounts:\n" + "3. Back to Main Menu:\n");
-                int option = scan.nextInt();
+                option = scan.nextInt();
                 if (option == 1) {
                     for (Account elem : accountList) {
                         if (elem != null && elem.getAccountType() == 'S') {
@@ -215,6 +228,7 @@ public class Main {
             }
 
             if (answer == 6) {
+                System.out.println("The following students have a balance below 100 dollars\nand will receive a letter from the bank about their low balance:");
                 for (Account elem : accountList) {
                     if (elem != null && elem.getPersonType() == 1) {
                         if (elem.getBalance() < 100) {
@@ -250,9 +264,9 @@ public class Main {
                                 System.out.println("The account's balance is: $" + String.format("%.2f", elem.getBalance()));
                             }
                             if (selection == 2) {
-                                System.out.print("How much would you like to withdraw from that account?\n$");
-                                withdrawal = scan.nextDouble();
                                 while (!done) {
+                                    System.out.print("Current balance of this account: $"+String.format("%.2f", elem.getBalance())+".\nHow much would you like to withdraw from that account?\n$");
+                                    withdrawal = scan.nextDouble();
 
                                     if (withdrawal > elem.getBalance()) {
                                         System.out.println("The account does not have enough money to make a withdrawal of that size.");
@@ -313,8 +327,8 @@ public class Main {
             }
 
             if (answer == 9){
-                int counter = 0;
-                int position = 0;
+                counter = 0;
+                position = 0;
 
                 for (Account elem : accountList) {
                     if (elem != null && elem.getAccountType() == 'S') {

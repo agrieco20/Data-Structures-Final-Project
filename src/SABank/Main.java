@@ -9,6 +9,9 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        long start;
+        long end;
+        long diff;
         boolean quit = false;
         Scanner scan = new Scanner(System.in);
         final double interest = 0.02;
@@ -115,9 +118,18 @@ public class Main {
 
             if (answer == 2) {
                 counter = 0;
-                System.out.println("Would you like to see:\n" + "1. Number of Savings Accounts:\n" + "2. Number of Checking Accounts:\n" + "3. Back to Main Menu:\n");
+                System.out.println("Would you like to see:\n" + "1. Total Number of Accounts:\n2. Number of Savings Accounts:\n" + "3. Number of Checking Accounts:\n" + "4. Back to Main Menu:\n");
                 option = scan.nextInt();
-                if (option == 1) {
+                if (option==1){
+                    count=0;
+                    for(Account elem : accountList){
+                        if(elem != null) {
+                            count += 1;
+                        }
+                    }
+                    System.out.println("Total Number of Accounts: "+count);
+                }
+                if (option == 2) {
                     for (Account elem : accountList) {
                         if (elem != null && elem.getAccountType() == 'S') {
                             counter++;
@@ -126,7 +138,7 @@ public class Main {
                     }
                     System.out.println("Number of Savings Accounts: " + counter);
                 }
-                if (option == 2) {
+                if (option == 3) {
                     for (Account elem : accountList) {
                         if (elem != null && elem.getAccountType() == 'C') {
                             counter++;
@@ -135,7 +147,7 @@ public class Main {
                     }
                     System.out.println("Number of Checking Accounts: " + counter);
                 }
-                if (option == 3) {
+                if (option == 4) {
                     continue;
                 }
             }
@@ -257,8 +269,15 @@ public class Main {
                 System.out.println("Which account would you like to access (Please enter last name of account)");
                 scan.nextLine();
                 String lastNameResponse = scan.nextLine();
+                start =  System.nanoTime();
+
+
+
                 for (Account elem : accountList) {
                     if (elem != null && elem.getLastName().equalsIgnoreCase(lastNameResponse)) {
+                        end = System.nanoTime();
+                        diff = end-start;
+                        System.out.println("The amount of time taken to search for the correct last name was: "+diff+" nanoseconds");
                         System.out.println("Please enter first name of account as well in order to ensure the right account is accessed: ");
                         String firstNameResponse = scan.nextLine();
                         if (elem.getFirstName().equalsIgnoreCase(firstNameResponse)) {
@@ -269,10 +288,14 @@ public class Main {
                             }
                             if (selection == 2) {
                                 while (!done) {
+
                                     System.out.print("Current balance of this account: $"+String.format("%.2f", elem.getBalance())+".\nHow much would you like to withdraw from that account?\n$");
                                     withdrawal = scan.nextDouble();
-
-                                    if (withdrawal > elem.getBalance()) {
+                                    if (elem.getBalance()==0){
+                                        System.out.println("You're broke. Why do you even have a bank account? Get a job.");
+                                        done=true;
+                                    }
+                                    else if (withdrawal > elem.getBalance()) {
                                         System.out.println("The account does not have enough money to make a withdrawal of that size.");
                                         done = false;
 
@@ -332,7 +355,7 @@ public class Main {
             if (answer == 9){
                 counter = 0;
                 position = 0;
-
+                start =  System.nanoTime();
                 for (Account elem : accountList) {
                     if (elem != null && elem.getAccountType() == 'S') {
                         counter++;
@@ -357,7 +380,9 @@ public class Main {
                         }
                     }
                 }
-
+                end = System.nanoTime();
+                diff=end-start;
+                System.out.println("The amount of time taken to sort was: "+diff+" nanoseconds");
                 System.out.println("Savings Accounts:");
 
                 for (Account elem : savingAccountsArray){

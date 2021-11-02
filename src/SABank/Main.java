@@ -28,6 +28,10 @@ public class Main {
         int personType;
         double deposit;
         double initialDeposit;
+        int first;
+        int last;
+        int middle;
+        Account result;
 
         //Student Accounts (3 Checking, 2 Savings)
         Account Amanda = new Account("Amanda","Turner",'F',"02/22/02",'C',1,1200);

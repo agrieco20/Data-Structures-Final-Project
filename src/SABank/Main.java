@@ -103,7 +103,7 @@ public class Main {
         System.out.println("Welcome to the Saint Anselm Bank!");
         do {
             System.out.println("\nPlease select one of the options below:");
-            System.out.println("1. Display All Accounts\n" + "2. Total Number of Accounts\n" + "3. Open a New Account with Initial Deposit\n" + "4. Open a New Account with no Deposit\n" + "5. Add Interest to All Accounts\n" + "6. Display Student Accounts with Balance less than $100\n" + "7. Display all Employee Accounts with a Balance over $5000\n" + "8. Linear Search for Account Holder\n" + "9. Display Savings Accounts based on a Bubble Sort by First Name\n" + "10. Exit\n");
+            System.out.println("1. Display All Accounts\n" + "2. Total Number of Accounts\n" + "3. Open a New Account with Initial Deposit\n" + "4. Open a New Account with no Deposit\n" + "5. Add Interest to All Accounts\n" + "6. Display Student Accounts with Balance less than $100\n" + "7. Display all Employee Accounts with a Balance over $5000\n" + "8. Linear Search for Account Holder\n" + "9. Display Savings Accounts based on a Bubble Sort by First Name\n" + "10. Binary Search by First Name\n" + "11. Selection Sort by Account Number\n" + "12. Exit\n");
             answer = scan.nextInt();
             if (answer == 1) {
                 //System.out.println("First Name," + " " + "Last Name," + " " + "Gender" + " " + "Birthday" + " " + "Social Security Number" + " " + "Account Number" + " " + "Account Type"+ " " + "Person Type" + " " + "Balance");
@@ -278,7 +278,7 @@ public class Main {
 
                                     } else {
                                         elem.withdrawFromBalance(withdrawal);
-                                        System.out.println("The amount $" + String.format("%.2f", withdrawal) + " has been removed to the account\n Current Balance: $" + String.format("%.2f", elem.getBalance()));
+                                        System.out.println("The amount $" + String.format("%.2f", withdrawal) + " has been removed to the account\nCurrent Balance: $" + String.format("%.2f", elem.getBalance()));
                                         break;
                                     }
                                 }
@@ -287,7 +287,7 @@ public class Main {
                                 System.out.print("How much would you like to deposit?\n$");
                                 deposit = scan.nextDouble();
                                 elem.depositToBalance(deposit);
-                                System.out.println("The amount $" + String.format("%.2f", deposit) + " has been added to the account\n Current Balance: $" + String.format("%.2f", elem.getBalance()));
+                                System.out.println("The amount $" + String.format("%.2f", deposit) + " has been added to the account\nCurrent Balance: $" + String.format("%.2f", elem.getBalance()));
                             }
                             if (selection == 4) {
                                 double interestAddition = elem.getBalance() * interest;
@@ -311,9 +311,8 @@ public class Main {
                             if (selection == 6) {
                                 continue;
                             }
-
-
-                        } else {
+                        }
+                        else {
                             count += 1;
                             if (count == accountList.length) {
                                 System.out.println("An account under that first name doesn't exist.");
@@ -370,6 +369,179 @@ public class Main {
             }
 
             if(answer==10){
+                //Binary Search
+                System.out.println("Please enter the first name of account: ");
+                scan.nextLine();
+                String firstNameResponse = scan.nextLine();
+                counter = 0;
+
+                for (Account elem : accountList) {
+                    if (elem != null)
+                        counter++;
+                }
+
+                Account[] tempAccountList = new Account[counter];
+                for (int i = 0; i<counter; i++){
+                    tempAccountList[i] = accountList[i];
+                }
+
+                for(int iteration = tempAccountList.length - 1; iteration >= 0; iteration--){
+                    for (int i = 0; i < tempAccountList.length - 1; i++) {
+                        if (tempAccountList[i].getFirstName().compareTo(tempAccountList[i + 1].getFirstName()) > 0) {
+                            Account tempAccount = tempAccountList[i + 1];
+                            tempAccountList[i + 1] = tempAccountList[i];
+                            tempAccountList[i] = tempAccount;
+                        }
+                    }
+                }
+
+                middle = 0;
+                first = 0;
+                last = tempAccountList.length-1;
+                result = null;
+                start =  System.nanoTime();
+                while(result == null && first <= last){
+                    middle = (first + last)/2;
+
+                    if(tempAccountList[middle].getFirstName().compareTo(firstNameResponse) == 0) {
+
+                        result = tempAccountList[middle];
+                    }
+                    else
+                    {
+                        if(tempAccountList[middle].getFirstName().compareTo(firstNameResponse) > 0)
+                            last = middle - 1;
+                        else
+                            first = middle + 1;
+                    }
+                }
+
+                if(result == null){
+                    System.out.println("An account under that first name doesn't exist.");
+                }
+                else{
+
+                    accountList = tempAccountList;
+
+                    end = System.nanoTime();
+                    diff = end - start;
+                    System.out.println("Amount of time taken to search: " + diff+" nanoseconds");
+                    System.out.print("Information for this account: ");
+                    result.displayAllAccountInfo();
+                    System.out.print("Would you like to:\n 1. Check Balance\n 2. Withdraw Money\n 3. Deposit Money\n 4. Change Account Type\n 5. Delete Account\n 6. Back to Main Menu\n");
+                    int selection = scan.nextInt();
+                    if (selection == 1) {
+                        System.out.println("The account's balance is: $" + String.format("%.2f", accountList[middle].getBalance()));
+                    }
+                    if (selection == 2) {
+                        while (!done) {
+                            System.out.print("Current balance of this account: $"+String.format("%.2f", accountList[middle].getBalance())+".\nHow much would you like to withdraw from that account?\n$");
+                            withdrawal = scan.nextDouble();
+                            if (accountList[middle].getBalance()==0){
+                                System.out.println("You're broke. Why do you even have a bank account? Get a job.");
+                                done=true;
+                            }
+                            else if (withdrawal > accountList[middle].getBalance()) {
+                                System.out.println("The account does not have enough money to make a withdrawal of that size.");
+                                done = false;
+
+                            } else {
+                                accountList[middle].withdrawFromBalance(withdrawal);
+                                System.out.println("The amount $" + String.format("%.2f", withdrawal) + " has been removed to the account\nCurrent Balance: $" + String.format("%.2f", accountList[middle].getBalance()));
+                                break;
+                            }
+                        }
+                    }
+                    if (selection == 3) {
+                        System.out.print("How much would you like to deposit?\n$");
+                        deposit = scan.nextDouble();
+                        accountList[middle].depositToBalance(deposit);
+                        System.out.println("The amount $" + String.format("%.2f", deposit) + " has been added to the account\nCurrent Balance: $" + String.format("%.2f", accountList[middle].getBalance()));
+                    }
+                    if (selection == 4) {
+                        if(accountList[middle].getAccountType()=='S'){
+                            accountList[middle].setAccountType('C');
+                        }
+                        else{
+//                            if(accountList[middle].getAccountType()=='C') {
+                                accountList[middle].setAccountType('S');
+//                            }
+                        }
+                        System.out.println("Account type changed to: "+ accountList[middle].getAccountType());
+                    }
+                    if (selection == 5) {
+                        Account[] tempArray = new Account[accountList.length - 1];
+                        for (int i = 0, j = 0; i < accountList.length; i++) {
+                            if (accountList[i] != null && accountList[i].getLastName() != accountList[middle].getLastName() && accountList[i].getFirstName() != accountList[middle].getFirstName()) {
+                                tempArray[j++] = accountList[i];
+                            }
+                        }
+                        int i = 0;
+                        for (Account part : tempArray) {
+                            accountList[i] = part;
+                            i += 1;
+                        }
+
+                    }
+                    if (selection == 6) {
+                        continue;
+                    }
+
+                }
+            }
+
+            if(answer==11){
+                int tempAccountNum = 0; //Bring to top
+                int largestAccountNum = 0; //Bring to top
+                Account tempAccountPlaceholder = null; //Bring to top
+                Account largestAccountPlaceholder = null; //Bring to top
+                start =  System.nanoTime();
+
+                counter = 0;
+                for (Account elem: accountList) {
+                    if (elem != null) {
+                        counter++;
+                    }
+                }
+
+                Account[] tempArray = new Account[counter];
+
+                //for (int i = 0; i<accountList.length)
+                for (int i = 0; i < accountList.length; i++){
+                    if (accountList[i] != null){
+                        tempArray[i] = accountList[i];
+                    }
+                }
+
+//                for(int index = 0; index < tempArray.length; index++) { //The loop is designed to look at a smaller range every time to compensate for the newly organint tempAccountNum = 0; //Bring to top
+//                    tempAccountNum = 0;
+                    for (int i = 0; i < tempArray.length ; i++) { //- index
+                        tempAccountNum = 0;
+                        for (int j = 0; j < tempArray[i].getAccountNumber().length(); j++) { //Determines the sum of the ASCII values of each Account Number
+                            tempAccountNum += (int) tempArray[i].getAccountNumber().charAt(j);
+//                            //if (tempArray[i].getAccountNumber().charAt(j) > tempAccountNum.charAt(j)){
+//                            //}
+                            //tempAccountNum += tempArray[i].getAccountNumber().charAt(j);
+                        }
+
+//                        System.out.println("ASCII Count:" + tempAccountNum); //temporary
+//                        System.out.println("Account Number:" + tempArray[i].getAccountNumber()); //temporary
+
+                        if (tempAccountNum > largestAccountNum) { //If an Account has a higher account number than the account that previously had the greatest account number, the new account will be set as the new highest
+                            largestAccountNum = tempAccountNum;
+                            largestAccountPlaceholder = tempArray[i];
+                            //tempAccountPlaceholder = tempArray[i];
+                        }
+                    }
+//                    if (largestAccountPlaceholder.getAccountNumber() != tempArray[tempArray.length-1 - index].getAccountNumber()){
+//                        tempAccountPlaceholder = tempArray[tempArray.length-1 - index];
+//                        tempArray[tempArray.length-1 - index] = largestAccountPlaceholder;
+//                        tempArray[index] = tempAccountPlaceholder; //? - 'index' could be source of error
+//                    }
+//                }
+            }
+
+            if(answer==12){
                 quit=true;
             }
 

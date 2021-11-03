@@ -515,14 +515,16 @@ public class Main {
                 }
             }
 
-            if(answer==11){
+            if(answer==11){ //Needs time component added to this answer choice still
                 int tempAccountNum = 0; //Bring to top
                 int largestAccountNum = 0; //Bring to top
                 Account tempAccountPlaceholder = null; //Bring to top
                 Account largestAccountPlaceholder = null; //Bring to top
+                int previousIndex =0; //Bring to top
+                
                 start =  System.nanoTime();
 
-                counter = 0;
+                counter = 0; //Eliminates any null elements in accountList when values are reassigned to tempArray
                 for (Account elem: accountList) {
                     if (elem != null) {
                         counter++;
@@ -531,39 +533,40 @@ public class Main {
 
                 Account[] tempArray = new Account[counter];
 
-                //for (int i = 0; i<accountList.length)
                 for (int i = 0; i < accountList.length; i++){
                     if (accountList[i] != null){
                         tempArray[i] = accountList[i];
                     }
                 }
-
-//                for(int index = 0; index < tempArray.length; index++) { //The loop is designed to look at a smaller range every time to compensate for the newly organint tempAccountNum = 0; //Bring to top
-//                    tempAccountNum = 0;
-                    for (int i = 0; i < tempArray.length ; i++) { //- index
-                        tempAccountNum = 0;
-                        for (int j = 0; j < tempArray[i].getAccountNumber().length(); j++) { //Determines the sum of the ASCII values of each Account Number
-                            tempAccountNum += (int) tempArray[i].getAccountNumber().charAt(j);
-//                            //if (tempArray[i].getAccountNumber().charAt(j) > tempAccountNum.charAt(j)){
-//                            //}
-                            //tempAccountNum += tempArray[i].getAccountNumber().charAt(j);
-                        }
-
-//                        System.out.println("ASCII Count:" + tempAccountNum); //temporary
-//                        System.out.println("Account Number:" + tempArray[i].getAccountNumber()); //temporary
-
-                        if (tempAccountNum > largestAccountNum) { //If an Account has a higher account number than the account that previously had the greatest account number, the new account will be set as the new highest
+                
+                //The loop is designed to look at a smaller range every time to compensate for the newly organized elements in the array
+                for(int index = 0; index < tempArray.length; index++){
+                    for (int i = 0; i < tempArray.length - index; i++){
+                        tempAccountNum = 0; //Reset
+                        tempAccountNum = Integer.parseInt(tempArray[i].getAccountNumber()); //Converts String account number into Int for easy comparison
+                        
+                        //If an Account has a higher account number than the account that previously had the greatest account number, the new account will be set as the new highest
+                        if (tempAccountNum > largestAccountNum) {
                             largestAccountNum = tempAccountNum;
                             largestAccountPlaceholder = tempArray[i];
-                            //tempAccountPlaceholder = tempArray[i];
+                            previousIndex = i;
                         }
                     }
-//                    if (largestAccountPlaceholder.getAccountNumber() != tempArray[tempArray.length-1 - index].getAccountNumber()){
-//                        tempAccountPlaceholder = tempArray[tempArray.length-1 - index];
-//                        tempArray[tempArray.length-1 - index] = largestAccountPlaceholder;
-//                        tempArray[index] = tempAccountPlaceholder; //? - 'index' could be source of error
-//                    }
-//                }
+                    
+                    //If the account with the biggest account number is not already at the end of the array, a swap will happen between the element at that point and the element containing the biggest account number
+                    if (largestAccountPlaceholder.getAccountNumber() != tempArray[tempArray.length-1 - index].getAccountNumber()){
+                        tempAccountPlaceholder = tempArray[tempArray.length - 1 - index];
+                        tempArray[tempArray.length-1 - index] = largestAccountPlaceholder;
+                        tempArray[previousIndex] = tempAccountPlaceholder;
+                    }
+                    largestAccountNum = 0; //Reset
+                }
+                
+                accountList = tempArray; //Reassigns the organized elements to the old array
+                
+                for (int i = 0; i<accountList.length; i++){
+                    System.out.println(accountList[i].displayAllAccountInfo());
+                }
             }
 
             if(answer==12){

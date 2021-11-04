@@ -35,6 +35,11 @@ public class Main {
         int last;
         int middle;
         Account result;
+        int tempAccountNum;
+        int largestAccountNum;
+        Account tempAccountPlaceholder;
+        Account largestAccountPlaceholder;
+        int previousIndex;
 
         //Student Accounts (3 Checking, 2 Savings)
         Account Amanda = new Account("Amanda","Turner",'F',"02/22/02",'C',1,1200);
@@ -168,7 +173,7 @@ public class Main {
                 accountType = scan.next().charAt(0);
                 System.out.print("Occupation (Student='1', Staff='2', Faculty='3'): ");
                 personType = scan.nextInt();
-                System.out.print("Deposit: ");
+                System.out.print("Deposit: $");
                 initialDeposit = scan.nextDouble();
                 Account newAccount = new Account (firstName, lastName, gender, birthday, accountType, personType, initialDeposit);
 
@@ -271,14 +276,13 @@ public class Main {
                 scan.nextLine();
                 String lastNameResponse = scan.nextLine();
                 start =  System.nanoTime();
-
-
+                done = false;
 
                 for (Account elem : accountList) {
                     if (elem != null && elem.getLastName().equalsIgnoreCase(lastNameResponse)) {
                         end = System.nanoTime();
                         diff = end-start;
-                        System.out.println("The amount of time taken to search for the correct last name was: "+diff+" nanoseconds");
+                        System.out.println("Linear Search for the correct last name completed in "+diff+" nanoseconds.");
                         System.out.println("Please enter first name of account as well in order to ensure the right account is accessed: ");
                         String firstNameResponse = scan.nextLine();
                         if (elem.getFirstName().equalsIgnoreCase(firstNameResponse)) {
@@ -325,11 +329,12 @@ public class Main {
                                         tempArray[j++] = accountList[i];
                                     }
                                 }
-                                int i = 0;
-                                for (Account part : tempArray) {
-                                    accountList[i] = part;
-                                    i += 1;
-                                }
+                                accountList = tempArray;
+//                                int i = 0;
+//                                for (Account part : tempArray) {
+//                                    accountList[i] = part;
+//                                    i += 1;
+//                                }
 
                             }
                             if (selection == 6) {
@@ -382,7 +387,7 @@ public class Main {
                 }
                 end = System.nanoTime();
                 diff=end-start;
-                System.out.println("The amount of time taken to sort was: "+diff+" nanoseconds");
+                System.out.println("Bubble Sort completed in "+diff+" nanoseconds.");
                 System.out.println("Savings Accounts:");
 
                 for (Account elem : savingAccountsArray){
@@ -450,7 +455,7 @@ public class Main {
                     done = false;
                     end = System.nanoTime();
                     diff = end - start;
-                    System.out.println("Amount of time taken to search: " + diff+" nanoseconds");
+                    System.out.println("Binary Search completed in " + diff+" nanoseconds.");
                     System.out.print("Information for this account: ");
                     result.displayAllAccountInfo();
                     System.out.print("Would you like to:\n 1. Check Balance\n 2. Withdraw Money\n 3. Deposit Money\n 4. Change Account Type\n 5. Delete Account\n 6. Back to Main Menu\n");
@@ -488,9 +493,7 @@ public class Main {
                             accountList[middle].setAccountType('C');
                         }
                         else{
-//                            if(accountList[middle].getAccountType()=='C') {
-                                accountList[middle].setAccountType('S');
-//                            }
+                            accountList[middle].setAccountType('S');
                         }
                         System.out.println("Account type changed to: "+ accountList[middle].getAccountType());
                     }
@@ -501,11 +504,8 @@ public class Main {
                                 tempArray[j++] = accountList[i];
                             }
                         }
-                        int i = 0;
-                        for (Account part : tempArray) {
-                            accountList[i] = part;
-                            i += 1;
-                        }
+
+                        accountList = tempArray;
 
                     }
                     if (selection == 6) {
@@ -516,13 +516,13 @@ public class Main {
             }
 
             if(answer==11){ //Needs time component added to this answer choice still
-                int tempAccountNum = 0; //Bring to top
-                int largestAccountNum = 0; //Bring to top
-                Account tempAccountPlaceholder = null; //Bring to top
-                Account largestAccountPlaceholder = null; //Bring to top
-                int previousIndex =0; //Bring to top
+                tempAccountNum = 0; //Reset
+                largestAccountNum = 0; //Reset
+                tempAccountPlaceholder = null; //Reset
+                largestAccountPlaceholder = null; //Reset
+                previousIndex = 0; //Reset
                 
-                start =  System.nanoTime();
+                start = System.nanoTime();
 
                 counter = 0; //Eliminates any null elements in accountList when values are reassigned to tempArray
                 for (Account elem: accountList) {
@@ -567,6 +567,11 @@ public class Main {
                 for (int i = 0; i<accountList.length; i++){
                     System.out.println(accountList[i].displayAllAccountInfo());
                 }
+
+                end = System.nanoTime();
+
+                diff = end - start;
+                System.out.println("Selection Sort completed in " + diff + " nanoseconds.");
             }
 
             if(answer==12){

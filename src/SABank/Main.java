@@ -266,6 +266,7 @@ public class Main {
             }
 
             if (answer == 8) {
+                count = 0;
                 System.out.println("Which account would you like to access (Please enter last name of account)");
                 scan.nextLine();
                 String lastNameResponse = scan.nextLine();
@@ -320,7 +321,7 @@ public class Main {
                             if (selection == 5) {
                                 Account[] tempArray = new Account[accountList.length - 1];
                                 for (int i = 0, j = 0; i < accountList.length; i++) {
-                                    if (accountList[i] != null && accountList[i].getLastName() != elem.getLastName() && accountList[i].getFirstName() != elem.getFirstName()) {
+                                    if (accountList[i] != null && (accountList[i].getLastName() != elem.getLastName() && accountList[i].getFirstName() != elem.getFirstName())) {
                                         tempArray[j++] = accountList[i];
                                     }
                                 }
@@ -349,7 +350,6 @@ public class Main {
                         }
                     }
                 }
-                count = 0;
             }
 
             if (answer == 9){
@@ -447,7 +447,7 @@ public class Main {
                 else{
 
                     accountList = tempAccountList;
-
+                    done = false;
                     end = System.nanoTime();
                     diff = end - start;
                     System.out.println("Amount of time taken to search: " + diff+" nanoseconds");
@@ -497,7 +497,7 @@ public class Main {
                     if (selection == 5) {
                         Account[] tempArray = new Account[accountList.length - 1];
                         for (int i = 0, j = 0; i < accountList.length; i++) {
-                            if (accountList[i] != null && accountList[i].getLastName() != accountList[middle].getLastName() && accountList[i].getFirstName() != accountList[middle].getFirstName()) {
+                            if (accountList[i] != null && (accountList[i].getLastName() != accountList[middle].getLastName() && accountList[i].getFirstName() != accountList[middle].getFirstName())) {
                                 tempArray[j++] = accountList[i];
                             }
                         }
@@ -574,7 +574,7 @@ public class Main {
             }
 
         }while(!quit);
-        System.out.println("Done!");
+        System.out.println("Thank you for using Saint Anselm College Bank!");
         System.exit(0);
     }
 }

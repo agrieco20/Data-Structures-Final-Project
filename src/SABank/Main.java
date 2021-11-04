@@ -250,6 +250,7 @@ public class Main {
             }
 
             if (answer == 8) {
+                count = 0;
                 System.out.println("Which account would you like to access (Please enter last name of account)");
                 scan.nextLine();
                 String lastNameResponse = scan.nextLine();
@@ -323,7 +324,6 @@ public class Main {
                         }
                     }
                 }
-                count = 0;
             }
 
             if (answer == 9){
